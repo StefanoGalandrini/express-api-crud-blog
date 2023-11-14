@@ -58,9 +58,6 @@ function show(req, res)
 		return;
 	}
 
-	// retrieve domain and port from request
-	const domain = req.hostname;
-	const port = process.env.PORT;
 
 	// add image_url property to post
 	const imageUrl = `${req.protocol}://${domain}:${port}/imgs/posts/${post.image}`;
