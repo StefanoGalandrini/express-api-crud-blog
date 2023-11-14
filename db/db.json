@@ -56,5 +56,47 @@
       "Ricette vegetariane",
       "Ricette al forno"
     ]
+  },
+  {
+    "title": "Insalata",
+    "content": "Questa insalata di spinaci e fragole è la scelta perfetta per un pasto leggero e fresco. I teneri spinaci si sposano alla perfezione con le dolci fragole, creando un contrasto di sapori delizioso.",
+    "tags": [
+      "Insalata",
+      "Fragole"
+    ],
+    "slug": "insalata",
+    "updatedAt": "2023-11-14T20:08:11.126Z",
+    "image": {
+      "fieldname": "image",
+      "originalname": "Sport.jpg",
+      "encoding": "7bit",
+      "mimetype": "image/jpeg",
+      "destination": "public/imgs/posts",
+      "filename": "f1c4fe07091c4a2bdffee908761d5ee0",
+      "path": "public\\imgs\\posts\\f1c4fe07091c4a2bdffee908761d5ee0",
+      "size": 855478
+    }
+  },
+  {
+    "title": "Insalata",
+    "content": "Questa insalata di spinaci e fragole è la scelta perfetta per un pasto leggero e fresco. I teneri spinaci si sposano alla perfezione con le dolci fragole, creando un contrasto di sapori delizioso.",
+    "tags": [
+      "Insalata",
+      "Fragole"
+    ],
+    "slug": "insalata",
+    "updatedAt": "2023-11-14T20:44:31.321Z",
+    "image": "f6d3cae2ca0de0d28695828a416e5f2e"
+  },
+  {
+    "title": "Insalata",
+    "content": "Questa insalata di spinaci e fragole è la scelta perfetta per un pasto leggero e fresco. I teneri spinaci si sposano alla perfezione con le dolci fragole, creando un contrasto di sapori delizioso.",
+    "tags": [
+      "Insalata",
+      "Fragole"
+    ],
+    "slug": "insalata",
+    "updatedAt": "2023-11-14T21:02:19.712Z",
+    "image": "ed27a477e9506316c9b94ad9d24d03a9"
   }
 ]

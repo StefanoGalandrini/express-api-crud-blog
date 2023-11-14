@@ -113,7 +113,7 @@ function store(req, res)
 {
 	// read DB in json format
 	const posts = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../db/db.json")));
-	console.log(req.body);
+
 
 
 	// create new post
@@ -121,7 +121,7 @@ function store(req, res)
 		...req.body,
 		slug: kebabCase(req.body.title),
 		updatedAt: new Date().toISOString(),
-		image: req.file
+		image: req.file.filename
 	});
 
 	// store new data in db.json
@@ -172,12 +172,20 @@ function destroy(req, res)
 		// delete post from posts array
 		posts.splice(postIndex, 1);
 
-		// store new data in db.json	
-		fs.writeFileSync(path.resolve(__dirname, "../db/db.json"), JSON.stringify(posts, null, 2));
-
-		// send response
-		res.send("Post deleted");
+		// unlink image file
+		// if (post.image)
+		// {
+		// 	const filePath = path.resolve(__dirname, "../public/imgs/posts", post.image);
+		// 	fs.unlinkSync(filePath);
+		// }
 	}
+
+
+	// store new data in db.json	
+	fs.writeFileSync(path.resolve(__dirname, "../db/db.json"), JSON.stringify(posts, null, 2));
+
+	// send response
+	res.send("Post deleted");
 }
 
 
