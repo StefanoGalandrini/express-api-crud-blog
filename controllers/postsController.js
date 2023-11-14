@@ -4,8 +4,9 @@ const express = require('express');
 const fs = require("fs");
 const path = require("path");
 const posts = require("../db/db");
+const { kebabCase } = require("lodash");
 
-// routes definition
+// params definition
 /**
  * @param {express.Request} req 
  * @param {express.Response} res 
@@ -42,7 +43,7 @@ function index(req, res)
 }
 
 
-// routes definition
+// params definition
 /**
  * @param {express.Request} req 
  * @param {express.Response} res 
@@ -60,10 +61,10 @@ function show(req, res)
 
 
 	// add image_url property to post
-	const imageUrl = `${req.protocol}://${domain}:${port}/imgs/posts/${post.image}`;
+	const imageUrl = `${req.protocol}://${req.hostname}:${process.env.PORT}/imgs/posts/${post.image}`;
 
 	// add link for download image
-	const imageDownloadUrl = `${req.protocol}://${domain}:${port}/posts/${post.slug}/download`;
+	const imageDownloadUrl = `${req.protocol}://${req.hostname}:${process.env.PORT}/posts/${post.slug}/download`;
 
 	// add keys to json
 	const postWithImageUrl = {
@@ -80,7 +81,7 @@ function show(req, res)
 }
 
 
-// routes definition
+// params definition
 /**
  * @param {express.Request} req 
  * @param {express.Response} res 
@@ -103,25 +104,53 @@ function create(req, res)
 	});
 }
 
-// routes definition
+// params definition
 /**
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
 function store(req, res)
 {
-	// get data from request body
-	const data = req.body;
+	// read DB in json format
+	const posts = require("../db/db.json");
 
-	// add new post to posts array
-	posts.push(data);
+	// read data from request
+	// const { title, content, image, tags } = req.body;
+	// console.log(req.body);
+	// const slug = kebabCase(title);
 
-	// return 201 status code
-	res.status(201).send("Post creato con successo");
+	// create new post
+	// const newPost = { title, slug, content, image, tags };
+	posts.push({
+		...req.body,
+		slug: kebabCase(req.body.title),
+		updatedAt: new Date().toISOString(),
+		image: req.file
+	});
+
+	// store new data in db.json
+	fs.writeFileSync(path.resolve(__dirname, "./db/db.json"), JSON.stringify(posts, null, 2));
+
+
+	// send response
+	res.format({
+		html: function ()
+		{
+			res.redirect('/');
+		},
+		json: function ()
+		{
+			res.status(201).json(posts[posts.length - 1]);
+		},
+		default: function ()
+		{
+			res.status(406).send('Formato non accettabile');
+		}
+	});
 }
 
 
-// routes definition
+// params definition
 /**
  * @param {express.Request} req 
  * @param {express.Response} res 
