@@ -116,16 +116,7 @@ function store(req, res)
 	console.log(req.body);
 
 
-
-	// read data from request
-	// const { title, content, image, tags } = req.body;
-	// console.log(req.body);
-	// const slug = kebabCase(title);
-
 	// create new post
-	// const newPost = { title, slug, content, image, tags };
-
-
 	posts.push({
 		...req.body,
 		slug: kebabCase(req.body.title),
@@ -141,7 +132,8 @@ function store(req, res)
 	res.format({
 		html: function ()
 		{
-			res.redirect('/');
+			console.log("redirect");
+			res.redirect("/");
 		},
 		json: function ()
 		{
