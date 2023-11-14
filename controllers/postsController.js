@@ -102,6 +102,23 @@ function create(req, res)
 	});
 }
 
+// routes definition
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+function store(req, res)
+{
+	// get data from request body
+	const data = req.body;
+
+	// add new post to posts array
+	posts.push(data);
+
+	// return 201 status code
+	res.status(201).send("Post creato con successo");
+}
+
 
 // routes definition
 /**
@@ -149,4 +166,5 @@ module.exports = {
 	show,
 	create,
 	download,
+	store,
 };
