@@ -112,7 +112,7 @@ function create(req, res)
 function store(req, res)
 {
 	// read DB in json format
-	const posts = require("../db/db.json");
+	const posts = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../db/db.json")));
 	console.log(req.body);
 
 
@@ -152,6 +152,44 @@ function store(req, res)
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
+function destroy(req, res)
+{
+	// find post by slug if exists
+	const post = findOrFail(req, res);
+	console.log(post);
+
+	if (!post)
+	{
+		res.status(404).send("Post not found");
+	} else
+	{
+		// read DB in json format
+		const posts = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../db/db.json")));
+
+		// find index of post to be deleted
+		const postIndex = posts.findIndex((p) => p.slug === post.slug);
+
+		// delete post from posts array
+		posts.splice(postIndex, 1);
+
+		// store new data in db.json	
+		fs.writeFileSync(path.resolve(__dirname, "../db/db.json"), JSON.stringify(posts, null, 2));
+
+		// send response
+		res.send("Post deleted");
+	}
+}
+
+
+
+
+
+
+// params definition
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
 function download(req, res)
 {
 	const slug = decodeURIComponent(req.params.slug);
@@ -171,6 +209,10 @@ function download(req, res)
 
 function findOrFail(req, res)
 {
+
+	//read data from json file
+	const posts = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../db/db.json")));
+
 	// find slug from request
 	const slug = req.params.slug;
 
@@ -194,4 +236,5 @@ module.exports = {
 	create,
 	download,
 	store,
+	destroy,
 };
