@@ -106,13 +106,16 @@ function create(req, res)
 
 // params definition
 /**
- * @param {express.Request} req 
+ * @param {import("express").Request} req 
  * @param {express.Response} res 
  */
 function store(req, res)
 {
 	// read DB in json format
 	const posts = require("../db/db.json");
+	console.log(req.body);
+
+
 
 	// read data from request
 	// const { title, content, image, tags } = req.body;
@@ -121,6 +124,8 @@ function store(req, res)
 
 	// create new post
 	// const newPost = { title, slug, content, image, tags };
+
+
 	posts.push({
 		...req.body,
 		slug: kebabCase(req.body.title),
@@ -129,7 +134,7 @@ function store(req, res)
 	});
 
 	// store new data in db.json
-	fs.writeFileSync(path.resolve(__dirname, "./db/db.json"), JSON.stringify(posts, null, 2));
+	fs.writeFileSync(path.resolve(__dirname, "../db/db.json"), JSON.stringify(posts, null, 2));
 
 
 	// send response

@@ -2,17 +2,20 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const app = express();
+
+// use data types
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// import posts routes
 const postsRouter = require('./routers/posts');
 
-//import routes
+//import standard routes
 const homeController = require('./controllers/home');
 
 // use router
 app.use('/posts', postsRouter);
 
-// use data types
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // static files
 app.use(express.static('public'));
